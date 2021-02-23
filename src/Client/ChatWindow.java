@@ -2,12 +2,17 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.function.Consumer;
 
 public class ChatWindow extends JFrame {
     private final StringBuilder sb;
     private final JTextField inputField;
     private final JTextArea textArea;
-    public ChatWindow() {
+    private Consumer<String> consumer;
+
+
+    public ChatWindow(Consumer<String> consumer) {
+        this.consumer = consumer;
         sb = new StringBuilder();
         setTitle("Chat window");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -35,12 +40,17 @@ public class ChatWindow extends JFrame {
 
     }
 
-    public void sendMessage (){
-        if (!inputField.getText().isBlank()) {
-            sb.append(inputField.getText());
+    public void append (String message){
+        if (!message.isBlank()) {
+            sb.append(message);
             sb.append("\n");
             textArea.setText(sb.toString());
+        }
+    }
+
+    public void sendMessage (){
+            consumer.accept(inputField.getText());
             inputField.setText("");
         }
     }
-}
+

@@ -21,11 +21,7 @@ public class ClientNetwork {
             socket = new Socket(host, port);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            new Thread(this::waitingInput).start();
-            Scanner sc = new Scanner(System.in);
-            while (true){
-                sendMessage(sc.nextLine());
-            }
+
         } catch (IOException e) {
             throw new RuntimeException("SWW", e);
         } finally {
@@ -33,7 +29,7 @@ public class ClientNetwork {
         }
     }
 
-    private void sendMessage (String message){
+    public void sendMessage (String message){
         try {
             if (message.length()!=0) {
                 out.writeUTF(message);
@@ -43,14 +39,11 @@ public class ClientNetwork {
         }
     }
 
-    private void waitingInput(){
-        while(true){
-            try {
-                System.out.println(in.readUTF());
-            } catch (IOException e) {
-                System.out.println("SWW when get message");
-                break;
-            }
+    public String receive (){
+        try {
+                return in.readUTF();
+        } catch (IOException e) {
+            throw new RuntimeException("SWW when receive message", e);
         }
     }
 }
