@@ -9,9 +9,9 @@ import java.util.Set;
 
 public class Server {
     private int host;
-    private ServerSocket serverSocket;
-    private AuthService authService;
-    private Set<ClientHandler> clients;
+    private final ServerSocket serverSocket;
+    private final AuthService authService;
+    private final Set<ClientHandler> clients;
 
     public Server(int host) {
         try {
