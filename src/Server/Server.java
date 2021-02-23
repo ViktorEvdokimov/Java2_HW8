@@ -8,14 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Server {
-    private int host;
+    private int port;
     private final ServerSocket serverSocket;
     private final AuthService authService;
     private final Set<ClientHandler> clients;
 
-    public Server(int host) {
+    public Server(int port) {
         try {
-            serverSocket = new ServerSocket(host);
+            this.port = port;
+            serverSocket = new ServerSocket(port);
             authService = new AuthService();
             clients = new HashSet<ClientHandler>();
             while (true){
